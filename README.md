@@ -2,7 +2,7 @@
 
 ### Flujo del usuario
 
-- El usuario ingresa su nombre y toca en "continuar" :x:
+- El usuario ingresa su nombre y toca en "continuar" :heavy_check_mark:
 - El usuario elije una categoria ("Whiskeys" o "Vinos") :x:
 - El usuario agrega al carrito los productos que desea comprar :x:
 - El usuario modifica la cantidad que quiere de cada producto :x:
