@@ -1,0 +1,79 @@
+@import url("variables.css");
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color-primario);
+    height: 12vh;
+    width: 100%;
+    position: fixed;
+}
+
+.logo {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: white;
+    min-width: 20%;
+    font-family: "Cinzel", serif;
+    font-size: 20px;
+    margin-left: 2%;
+}
+
+.logo img {
+    width: 50px;
+}
+
+#modo-oscuro {
+    display: flex;
+    margin-right: 2%;
+    background: none;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 100%;
+    height: 70px;
+    width: 70px;
+    transition: background-color 0.3s ease;
+}
+
+#modo-oscuro:hover{
+    background-color: var(--color-primario-hover);
+    cursor: pointer;
+}
+
+#modo-oscuro img {
+    height: 60px;
+}
+
+@media (max-width: 480px) {
+
+    .logo {
+        font-size: 15px;
+    }
+
+    .logo img {
+        width: 30px;
+    }
+
+    #modo-oscuro img {
+        height: 30px;
+    }
+
+    #modo-oscuro {
+        width: 40px;
+        height: 40px;
+    }
+
+}
+
+@font-face {
+    font-family: "Cinzel";
+    src: url("../assets/fonts/Cinzel-Regular.ttf");
+}

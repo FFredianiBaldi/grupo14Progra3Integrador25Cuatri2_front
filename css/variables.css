@@ -1,0 +1,19 @@
+:root {
+    --color-primario: #00bfa6;
+    --color-primario-hover: #01a38e;
+    --color-secundario: #ff9800;
+    --color-fondo: #121212;
+    --color-fondo-secundario: #2f2f2f;
+    --rojo: #ff5757;
+    --color-texto: #ffffff;
+}
+
+body.tema-claro {
+    --color-primario: #00bfa6;
+    --color-primario-hover: #01a38e;
+    --color-secundario: #ff9800;
+    --color-fondo: #e0e0e0;
+    --color-fondo-secundario: #ffffff;
+    --rojo: #ff5757;
+    --color-texto: #000000;
+}
