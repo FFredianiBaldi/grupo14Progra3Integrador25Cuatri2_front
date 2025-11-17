@@ -1,18 +1,35 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alambique 22</title>
     <link rel="icon" href="assets/icons/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/productos.css">
     <script defer src="js/main.js"></script>
     <script defer src="js/productos.js"></script>
 </head>
+
 <body>
     <div id="header"></div>
-    <section id="productos-section">
 
+    <section id="productos-section">
     </section>
+
+        <div id="orden-buttons">
+        <button id="orden-nombre" class="btn">Ordenar por Nombre</button>
+        <button id="orden-precio" class="btn">Ordenar por Precio</button>
+        <button id="vaciar-carrito" class="btn btn-eliminar">Vaciar carrito</button>
+    </div>
+
+    <div id="contador">Carrito: 0 productos</div>
+
+    <div id="carrito">
+    </div>
+
+    <div id="total">Total: $0</div>
 </body>
+
 </html>
