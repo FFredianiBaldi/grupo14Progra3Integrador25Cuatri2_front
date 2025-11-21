@@ -17,7 +17,8 @@
 
 ### Flujo del administrador
 
-- El administrador presiona el boton "admin" :x:
+- El administrador ingresa email y contraseña :heavy_check_mark:
+- El administrador presiona "ingresar" y es redirigido al dashboard si lo que ingreso es correcto :heavy_check_mark:
 - El administrador selecciona la opcion de ver los productos :x:
 - El administrador selecciona el boton para editar un producto :x:
 - El administrador modifica la imagen, el nombre, el precio, el stock y/o el estado "activo" (true/false) :x:
@@ -25,10 +26,9 @@
 - El administrador agrega un producto :x:
 - El administrador ingresa la imagen, el nombre, el precio, el stock, Y el estado "activo" (true/false). No hay campos opcionales :x:
 - El administrador confirma lo ingresado :x:
-- El administrador vuelve al dashboard :x:
 - El administrador selecciona la opcion de ver las ventas :x:
 - Se le muestran al administrador todas las ventas con detalles minimos como el precio y la fecha :x:
 - El administrador elige ver el detalle de una venta :x:
 - Se le muestra el ticket de la venta :x:
-- El administrador toca el boton "exit" :x:
-- Se vuelve al index :x:
+- El administrador toca el boton "Cerrar sesion" :heavy_check_mark:
+- El administrador es redirigido al login :heavy_check_mark:
