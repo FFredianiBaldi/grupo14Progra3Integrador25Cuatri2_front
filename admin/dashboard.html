@@ -5,10 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alambique 22 - Dashboard</title>
     <link rel="icon" href="../assets/icons/logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
     <script defer src="../js/admin-dashboard.js"></script>
 </head>
-<body>
-    <button id="cerrar-sesion">Cerrar sesion</button>
+<body class="tema-claro">
+    <aside>
+        <div class="aside-superior">
+            <div class="logo">
+                <img src="../assets/icons/logo.png" alt="logo">
+                <h2>Alambique 22</h2>
+            </div>
+        <ul>
+            <li><a href="#" id="btn-productos">Productos</a></li>
+            <li><a href="#" id="btn-ventas">Ventas</a></li>
+        </ul>
+        </div>
+        <div class="aside-inferior">
+            <button id="cerrar-sesion">Cerrar sesion</button>
+        </div>
+    </aside>
+
+    <main>
+        <div class="productos"></div>
+
+        <div class="ventas"></div>
+    </main>
 </body>
 </html>
