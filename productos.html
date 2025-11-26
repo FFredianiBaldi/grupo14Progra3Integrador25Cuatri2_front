@@ -14,23 +14,39 @@
 
 <body>
     <div id="header"></div>
-    <div id="orden-buttons">
-        <button id="orden-nombre" class="btn">Ordenar por Nombre</button>
-        <button id="orden-precio" class="btn">Ordenar por Precio</button>
-        <button id="whiskies" class="btn">Whiskies</button>
-        <button id="vinos" class="btn">Vinos</button>
-    </div>
-    <section id="productos-section">
-    </section>
+    <aside>
+        <div class="selector-categoria categoria-activo">
+            <button id="whiskies" class="btn"><img src="./assets/images/whiskeys.webp" alt="Whiskeys"><p>Whiskeys</p></button>
+        </div>
+
+        <div class="selector-categoria">
+            <button id="vinos" class="btn"><img src="./assets/images/vinos.webp" alt="Vinos"><p>Vinos</p></button>
+        </div>
+
+        <a href="index.html">Volver</a>
+    </aside>
 
 
-    <div id="contador">Carrito: 0 productos</div>
+    <main>
+        <section id="productos-section">
+        </section>
+    </main>
+
+
 
     <div id="carrito">
+        <div class="opciones-carrito">
+            <div class="info-carrito">
+                <div id="contador">Carrito: 0 productos</div>
+                <div id="total">Total: $0</div>
+            </div>
+            <button id="vaciar-carrito" class="btn btn-eliminar">Vaciar carrito</button>
+        </div>
+
+        <button class="to-carrito">Continuar al carrito &gt;</button>
     </div>
 
-    <div id="total">Total: $0</div>
-            <button id="vaciar-carrito" class="btn btn-eliminar">Vaciar carrito</button>
+    <div id="notificacion" class="oculto"></div>
 </body>
 
 </html>
