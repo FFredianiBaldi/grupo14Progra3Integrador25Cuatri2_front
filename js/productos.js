@@ -73,7 +73,7 @@ const agregarAlCarrito = (productoId) => {
     let productoEncontradoEnCarrito = carrito.find(producto => producto.id === productoId);
 
     const cantidadActual = obtenerCantidadEnCarrito(productoId);
-    if (cantidadActual >= productoEncontradoEnCarrito.stock) {
+    if (cantidadActual >= productoEncontrado.stock) {
         mostrarNotificacion("No hay mas stock disponible");
         return;
     }
