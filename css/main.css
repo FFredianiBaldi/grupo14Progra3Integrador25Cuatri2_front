@@ -1,16 +1,8 @@
 @import url("variables.css");
-@font-face {
-    font-family: "Cinzel";
-    src: url("../assets/fonts/Cinzel-Regular.ttf");
-}
-
-* {
-    margin: 0;
-    padding: 0;
-}
 
 body {
-    font-family: "Cinzel", sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 #header {
@@ -20,9 +12,7 @@ body {
     background-color: var(--color-primario);
     height: 12vh;
     width: 100%;
-    position: sticky;
-    top: 0;
-    width: 100%;
+    position: fixed;
 }
 
 .logo {
@@ -38,6 +28,11 @@ body {
 
 .logo img {
     width: 50px;
+}
+
+.img {
+    width: 100px;
+    height: 100px;
 }
 
 #modo-oscuro {
@@ -81,4 +76,9 @@ body {
         height: 40px;
     }
 
+}
+
+@font-face {
+    font-family: "Cinzel";
+    src: url("../assets/fonts/Cinzel-Regular.ttf");
 }

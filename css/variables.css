@@ -5,7 +5,10 @@
     --color-fondo: #121212;
     --color-fondo-secundario: #2f2f2f;
     --rojo: #ff5757;
+    --rojo-hover: #e24f4f;
     --color-texto: #ffffff;
+    --carrito: #ff9800;
+    --carrito-secundario: #d88100;
 }
 
 body.tema-claro {
@@ -15,5 +18,8 @@ body.tema-claro {
     --color-fondo: #e0e0e0;
     --color-fondo-secundario: #ffffff;
     --rojo: #ff5757;
+    --rojo-hover: #e24f4f;
     --color-texto: #000000;
+    --carrito: #ff9800;
+    --carrito-secundario: #d88100;
 }
