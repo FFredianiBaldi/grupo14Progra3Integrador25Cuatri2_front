@@ -21,9 +21,9 @@ const fetchProducts = () => {
         console.log(error);
         // En caso de error, cargar productos de ejemplo
         const productosEjemplo = [
-            { id: 1, nombre: "Jack Daniels", precio: 49115, categoria: "Whiskeys", imagen: "./img/jack-daniels.jpg" },
-            { id: 2, nombre: "Johmie Walker Black", precio: 54500, categoria: "Whiskeys", imagen: "./img/johmie-walker.jpg" },
-            { id: 3, nombre: "Jameson Irish Whiskey", precio: 34059, categoria: "Whiskeys", imagen: "./img/jameson.jpg" }
+            { id: 1, nombre: "Jack Daniels", precio: 49, categoria: "Whiskeys", imagen: "./img/jack-daniels.jpg" },
+            { id: 2, nombre: "Johmie Walker Black", precio: 54, categoria: "Whiskeys", imagen: "./img/johmie-walker.jpg" },
+            { id: 3, nombre: "Jameson Irish Whiskey", precio: 34, categoria: "Whiskeys", imagen: "./img/jameson.jpg" }
         ];
         productos.push(...productosEjemplo);
         mostrarProductos(productos);
@@ -38,9 +38,8 @@ const mostrarProductos = (array) => {
             `
             <div class="card-producto">
                 <img class="img" src="${producto.imagen}" alt="${producto.nombre}">
-                <h3>${producto.nombre}</h3>
-                <p>$${producto.precio}</p>
-                <span>${producto.categoria}</span>
+                <h3 class="nombre">${producto.nombre}</h3>
+                <p class="precio">$${producto.precio}</p>
                 <button class="btn" onclick="agregarAlCarrito(${producto.id})">Agregar al carrito</button>
             </div>
         `
@@ -104,6 +103,18 @@ const calcularTotal = () => {
     totalObj.innerText = `Total: $${sumaTotal.toFixed(2)}`; // Fixed para 2 decimales
 }
 
+document.getElementById('whiskies').addEventListener('click', () => {
+    let productosFiltrados = productos
+        .filter(producto => producto.categoria === 'whisky')
+    mostrarProductos(productosFiltrados);
+});
+
+document.getElementById('vinos').addEventListener('click', () => {
+    let productosFiltrados = productos
+        .filter(producto => producto.categoria === 'vino')
+    mostrarProductos(productosFiltrados);
+});
+
 document.getElementById('orden-nombre').addEventListener('click', () => {
     let productosOrdenados = [...productos].sort((a, b) => {
         return a.nombre.localeCompare(b.nombre);
@@ -116,7 +127,7 @@ document.getElementById('orden-precio').addEventListener('click', () => {
     mostrarProductos(productosOrdenados);
 });
 
-document.getElementById('vaciar-carrito').addEventListener('click', function() {
+document.getElementById('vaciar-carrito').addEventListener('click', function () {
     carrito = [];
     localStorage.removeItem('carrito');
     mostrarCarrito();
