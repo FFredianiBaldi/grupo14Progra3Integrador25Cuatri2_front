@@ -24,13 +24,30 @@ form.addEventListener("submit", async (evento) => {
         const data = await res.json();
 
         if (!res.ok){
+            mostrarNotificacion(data.message, "red");
             console.log(data.message);
             return;
         }
 
         document.getElementById("email").value = "";
         document.getElementById("password").value = "";
+
+        mostrarNotificacion("Usuario registrado con exito", "green");
     } catch(err) {
         console.error("error en la peticion: ", err);
+        mostrarNotificacion("Error del servidor", "red")
     }
 });
+
+function mostrarNotificacion(texto, color) {
+    const notif = document.getElementById("notificacion");
+    notif.textContent = texto;
+
+    notif.style.backgroundColor = color;
+
+    notif.classList.add("mostrar");
+
+    setTimeout(() => {
+        notif.classList.remove("mostrar");
+    }, 2000);
+}
