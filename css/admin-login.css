@@ -52,6 +52,46 @@ main h1{
     cursor: pointer;
 }
 
+.autocompletar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: var(--color-primario);
+    border: none;
+    border-radius: 5px;
+    height: 30px;
+    width: 150px;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.autocompletar:hover {
+    background-color: var(--color-primario-hover);
+    cursor: pointer;
+}
+
+#notificacion {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: green;
+    color: black;
+    padding: 15px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 9999;
+}
+
+#notificacion.mostrar{
+    opacity: 1;
+}
+
 @media (max-width: 480px) {
     main {
         width: 80%;
