@@ -241,7 +241,7 @@ function agregarProducto(){
             <option value="vino">Vino</option>
         </select>
         <label for="precio-nuevo-producto">Precio del producto:</label>
-        <input type="number" id="precio-nuevo-producto" placeholder="59800.00" required>
+        <input type="decimal" id="precio-nuevo-producto" placeholder="59800.00" required>
         <label for="stock-nuevo-producto">Cantidad en stock:</label>
         <input type="number" id="stock-nuevo-producto" placeholder="30" required>
         <label for="habilitado-nuevo-producto">Habilitado:</label>
@@ -369,7 +369,7 @@ function editar(id) {
             <option value="vino" ${producto.categoria === "vino" ? "selected" : ""}>Vino</option>
         </select><br>
         <label for="precio-form">Precio del producto:<label><br>
-        <input type="number" name="precio" id="precio-form" value="${producto.precio}"><br>
+        <input type="decimal" name="precio" id="precio-form" value="${producto.precio}"><br>
         <label for="stock-form">Cantidad en stock:<label><br>
         <input type="number" name="stock" id="stock-form" value="${producto.stock}"><br>
         <label for="habilitado-form">Habilitado:<label><br>
