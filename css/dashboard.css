@@ -247,6 +247,17 @@ main {
     align-items: center;
 }
 
+#form-nuevo-producto {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#form-nuevo-producto input, #form-nuevo-producto select {
+    margin: 8px 0;
+}
+
 @font-face {
     font-family: "Cinzel";
     src: url("../assets/fonts/Cinzel-Regular.ttf");
