@@ -80,6 +80,7 @@ function fetchProducts(){
 }
 
 function mostrarProductos(array){
+    let valorBusquedaActual = document.getElementById("buscador-productos")?.value || "";
 
     let categoriaSeleccionada = document.getElementById("filtrar-categoria")?.value || "todos";
     let ordenSeleccionado = document.getElementById("ordenar-por")?.value || "id";
@@ -87,19 +88,25 @@ function mostrarProductos(array){
     let objetoInfo = 
     `
     <div class="filtrado-productos">
-        <p>Categoria: </p>
-        <select id="filtrar-categoria">
-            <option value="todos" ${categoriaSeleccionada === "todos" ? "selected" : ""}>Todos</option>
-            <option value="whisky" ${categoriaSeleccionada === "whisky" ? "selected" : ""}>Whisky</option>
-            <option value="vino" ${categoriaSeleccionada === "vino" ? "selected" : ""}>Vino</option>
-        </select>
-        <p>Ordenar por: </p>
-        <select id="ordenar-por">
-            <option value="id" ${ordenSeleccionado === "id" ? "selected" : ""}>ID</option>
-            <option value="alfabeticamente" ${ordenSeleccionado === "alfabeticamente" ? "selected" : ""}>A-Z</option>
-            <option value="precio-asc" ${ordenSeleccionado === "precio-asc" ? "selected" : ""}>Precio men. a may.</option>
-            <option value="precio-desc" ${ordenSeleccionado === "precio-desc" ? "selected" : ""}>Precio may. a men.</option>
-        </select>
+        <div class="filtros">
+            <p>Categoria: </p>
+            <select id="filtrar-categoria">
+                <option value="todos" ${categoriaSeleccionada === "todos" ? "selected" : ""}>Todos</option>
+                <option value="whisky" ${categoriaSeleccionada === "whisky" ? "selected" : ""}>Whisky</option>
+                <option value="vino" ${categoriaSeleccionada === "vino" ? "selected" : ""}>Vino</option>
+            </select>
+            <p>Ordenar por: </p>
+            <select id="ordenar-por">
+                <option value="id" ${ordenSeleccionado === "id" ? "selected" : ""}>ID</option>
+                <option value="alfabeticamente" ${ordenSeleccionado === "alfabeticamente" ? "selected" : ""}>A-Z</option>
+                <option value="precio-asc" ${ordenSeleccionado === "precio-asc" ? "selected" : ""}>Precio men. a may.</option>
+                <option value="precio-desc" ${ordenSeleccionado === "precio-desc" ? "selected" : ""}>Precio may. a men.</option>
+            </select>
+        </div>
+
+        <div class="busqueda">
+            <input type="text" id="buscador-productos" placeholder="Buscar...">
+        </div>
     </div>
 
         
@@ -148,6 +155,9 @@ function mostrarProductos(array){
     `
 
     seccionInfo.innerHTML = objetoInfo;
+
+    document.getElementById("buscador-productos").value = valorBusquedaActual;
+    document.getElementById("buscador-productos").focus();
 
     const selectCat = document.getElementById("filtrar-categoria");
 
@@ -200,6 +210,20 @@ function mostrarProductos(array){
             }
         }
     }
+
+    const buscadorProductos = document.getElementById("buscador-productos");
+
+    buscadorProductos.addEventListener("keyup", () => {
+        let valorBusqueda = buscadorProductos.value.toLowerCase();
+        let productosFiltrados = [];
+        if (productosAMostrar.length > 0) {
+            productosFiltrados = productosAMostrar.filter(producto => producto.nombre.toLowerCase().includes(valorBusqueda));
+        } else {
+            productosFiltrados = productos.filter(producto => producto.nombre.toLowerCase().includes(valorBusqueda));
+        }
+
+        mostrarProductos(productosFiltrados);
+    });
 }
 
 function mostrarBuscador(){
