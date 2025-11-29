@@ -226,12 +226,73 @@ function mostrarProductos(array){
     });
 }
 
-function mostrarBuscador(){
-    seccionInfo.innerHTML = "";
-}
-
 function agregarProducto(){
     seccionInfo.innerHTML = "";
+
+    let objetoInfo = `
+    <form id="form-nuevo-producto">
+        <label for="imagen-nuevo-producto">URL de la imagen:</label>
+        <input type="text" id="imagen-nuevo-producto" placeholder="https://www.ejemplo.com/imagen.jpg" required>
+        <label for="nombre-nuevo-producto">Nombre del producto:</label>
+        <input type="text" id="nombre-nuevo-producto" placeholder="Whisky 1L Black Label de Johnnie Walker" required>
+        <label for="categoria-nuevo-producto">Categoria del producto:</label>
+        <select id="categoria-nuevo-producto">
+            <option value="whisky">Whisky</option>
+            <option value="vino">Vino</option>
+        </select>
+        <label for="precio-nuevo-producto">Precio del producto:</label>
+        <input type="number" id="precio-nuevo-producto" placeholder="59800.00" required>
+        <label for="stock-nuevo-producto">Cantidad en stock:</label>
+        <input type="number" id="stock-nuevo-producto" placeholder="30" required>
+        <label for="habilitado-nuevo-producto">Habilitado:</label>
+        <select id="habilitado-nuevo-producto">
+            <option value="1">Si</option>
+            <option value="0">No</option>
+        </select>
+
+        <button type="submit" class="btn-confirmar">Confirmar</button>
+    </form>
+    `;
+
+    seccionInfo.innerHTML = objetoInfo;
+
+    document.getElementById("form-nuevo-producto").addEventListener("submit", (evento) => {
+        evento.preventDefault();
+
+        const productoNuevo = {
+            imagen: document.getElementById("imagen-nuevo-producto").value,
+            nombre: document.getElementById("nombre-nuevo-producto").value,
+            categoria: document.getElementById("categoria-nuevo-producto").value,
+            precio: Number(document.getElementById("precio-nuevo-producto").value),
+            stock: Number(document.getElementById("stock-nuevo-producto").value),
+            habilitado: Number(document.getElementById("habilitado-nuevo-producto").value)
+        };
+
+        efectuarCreacionProducto(productoNuevo);
+    })
+}
+
+async function efectuarCreacionProducto(producto){
+    try {
+        const res = await fetch("http://localhost:3000/api/products/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(producto)
+        });
+
+        if (!res.ok) {
+            console.error("error al actualizar en la base de datos");
+            return
+        }
+
+        const nuevoProducto = await res.json();
+
+        productos.push(nuevoProducto.product)
+    } catch (error){
+        console.error(error);
+    }
 }
 
 function toggleHabilitadoNotificacion(id){
@@ -308,9 +369,9 @@ function editar(id) {
             <option value="vino" ${producto.categoria === "vino" ? "selected" : ""}>Vino</option>
         </select><br>
         <label for="precio-form">Precio del producto:<label><br>
-        <input type="text" name="precio" id="precio-form" value="${producto.precio}"><br>
+        <input type="number" name="precio" id="precio-form" value="${producto.precio}"><br>
         <label for="stock-form">Cantidad en stock:<label><br>
-        <input type="text" name="stock" id="stock-form" value="${producto.stock}"><br>
+        <input type="number" name="stock" id="stock-form" value="${producto.stock}"><br>
         <label for="habilitado-form">Habilitado:<label><br>
         <select id="habilitado-form">
             <option value="1" ${producto.habilitado ? "selected" : ""}>Si</option>
