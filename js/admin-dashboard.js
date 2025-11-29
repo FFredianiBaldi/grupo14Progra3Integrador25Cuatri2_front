@@ -114,7 +114,7 @@ function mostrarProductos(array){
             <td class="habilitado-producto">${producto.habilitado ? "Si" : "No"}</td>
             <td class="btns-modificar-producto">
                 <button class="btn-editar" onclick="editar(${producto.id})">Editar</button>
-                <button class="${producto.habilitado ? "btn-deshabilitar" : "btn-habilitar"}" onclick="toggleHabilitado(${producto.id})">${producto.habilitado ? "Deshabilitar" : "Habilitar"}</button>
+                <button class="${producto.habilitado ? "btn-deshabilitar" : "btn-habilitar"}" onclick="toggleHabilitadoNotificacion(${producto.id})">${producto.habilitado ? "Deshabilitar" : "Habilitar"}</button>
             </td>
         </tr>
         `
@@ -134,6 +134,66 @@ function mostrarBuscador(){
 
 function agregarProducto(){
     seccionInfo.innerHTML = "";
+}
+
+function toggleHabilitadoNotificacion(id){
+    const producto = productos.find(p => p.id === id);
+    const pantallaNotificacion = document.getElementById("toggle-habilitado-notificacion");
+    const overlay = document.getElementById("overlay");
+
+    pantallaNotificacion.innerHTML = `
+    <h3>Esta seguro que desea ${producto.habilitado ? "deshabilitar" : "habilitar"} este producto?</h3>
+    <div class="btns-confirmacion">
+        <button class="btn-confirmar" onclick="efectuarToggle(${id})">Confirmar</button>
+        <button class="btn-cancelar" onclick="cerrarNotificacionHabilitado()">Cancelar</button>
+    </div>
+    `
+
+    pantallaNotificacion.style.opacity = 1;
+    overlay.style.opacity = 1;
+    overlay.style.pointerEvents = "auto";
+}
+
+async function efectuarToggle(id){
+    const producto = productos.find(p => p.id === id);
+
+    try {
+        const res = await fetch(`http://localhost:3000/api/products/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                habilitado: !producto.habilitado
+            })
+        });
+
+        if(!res.ok){
+            console.error("error al actualizar en la base de datos");
+            return
+        }
+
+        const actualizado = await res.json();
+
+        producto.habilitado = actualizado.product.habilitado;
+
+        mostrarProductos(productosAMostrar.length > 0 ? productosAMostrar : productos);
+
+        cerrarNotificacionHabilitado();
+    } catch(error) {
+        console.error(error);
+    }
+}
+
+function cerrarNotificacionHabilitado(){
+    const pantallaNotificacion = document.getElementById("toggle-habilitado-notificacion");
+    const overlay = document.getElementById("overlay");
+
+    pantallaNotificacion.style.opacity = 0;
+    pantallaNotificacion.style.pointerEvents = "auto";
+
+    overlay.style.opacity = 0;
+    overlay.style.pointerEvents = "none";
 }
 
 fetchProducts();

@@ -157,8 +157,78 @@ main {
     background-color: lightgreen;
 }
 
+.btn-habilitar:hover {
+    background-color: rgb(122, 202, 122);
+    cursor: pointer;
+}
+
 .btn-deshabilitar {
     background-color: lightcoral;
+}
+
+.btn-deshabilitar:hover {
+    background-color: rgb(204, 108, 108);
+    cursor: pointer;
+}
+
+#toggle-habilitado-notificacion {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background-color: var(--color-fondo);
+    border: 1px solid black;
+    padding: 20px;
+    border-radius: 5px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+
+    z-index: 1000;
+
+    pointer-events: auto;
+}
+
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 900;
+}
+
+.btn-confirmar {
+    background-color: lightgreen;
+    border: none;
+    height: 30px;
+    border-radius: 5px;
+}
+
+.btn-confirmar:hover {
+    background-color: rgb(122, 202, 122);
+    cursor: pointer;
+}
+
+.btn-cancelar {
+    background-color: lightcoral;
+    border: none;
+    height: 30px;
+    border-radius: 5px;
+}
+
+.btn-cancelar:hover {
+    background-color: rgb(204, 108, 108);
+    cursor: pointer;
 }
 
 @font-face {
