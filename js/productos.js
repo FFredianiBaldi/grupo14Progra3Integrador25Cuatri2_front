@@ -46,24 +46,26 @@ const fetchProducts = () => {
 const mostrarProductos = (array) => {
     let objetoProductos = '';
     array.forEach(producto => {
-        const cantidad = obtenerCantidadEnCarrito(producto.id);
-        const esEnCarrito = cantidad > 0;
-        objetoProductos +=
+        if(producto.habilitado){
+            const cantidad = obtenerCantidadEnCarrito(producto.id);
+            const esEnCarrito = cantidad > 0;
+            objetoProductos +=
+                `
+                <div class="card-producto">
+                    <div class="img-wrapper">
+                        <img src="${producto.imagen}" alt="${producto.nombre}">
+                    </div>
+                    <h3 class="nombre-producto">${producto.nombre}</h3>
+                    <p class="precio-producto">$${producto.precio}</p>
+                    <div class="cantidad-producto">
+                        <button class="btn-restar" data-id="${producto.id}">-</button>
+                        <p class="cantidad-elegida">${obtenerCantidadEnCarrito(producto.id)}</p>
+                        <button class="btn-sumar" data-id="${producto.id}">+</button>
+                    </div>
+                    <button class="btn-producto btn-toggle ${cantidad > 0 ? "btn-eliminar" : ""}" data-id="${producto.id}">${esEnCarrito ? "Eliminar del carrito" : "Agregar al carrito"}</button>
+                </div>
             `
-            <div class="card-producto">
-                <div class="img-wrapper">
-                    <img src="${producto.imagen}" alt="${producto.nombre}">
-                </div>
-                <h3 class="nombre-producto">${producto.nombre}</h3>
-                <p class="precio-producto">$${producto.precio}</p>
-                <div class="cantidad-producto">
-                    <button class="btn-restar" data-id="${producto.id}">-</button>
-                    <p class="cantidad-elegida">${obtenerCantidadEnCarrito(producto.id)}</p>
-                    <button class="btn-sumar" data-id="${producto.id}">+</button>
-                </div>
-                <button class="btn-producto btn-toggle ${cantidad > 0 ? "btn-eliminar" : ""}" data-id="${producto.id}">${esEnCarrito ? "Eliminar del carrito" : "Agregar al carrito"}</button>
-            </div>
-        `
+        }
     })
     productosSection.innerHTML = objetoProductos;
 }
