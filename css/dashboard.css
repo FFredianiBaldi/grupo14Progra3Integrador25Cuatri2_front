@@ -238,6 +238,12 @@ main {
 
 .filtrado-productos {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filtros {
+    display: flex;
     align-items: center;
 }
 
