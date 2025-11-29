@@ -236,6 +236,11 @@ main {
     cursor: pointer;
 }
 
+.filtrado-productos {
+    display: flex;
+    align-items: center;
+}
+
 @font-face {
     font-family: "Cinzel";
     src: url("../assets/fonts/Cinzel-Regular.ttf");
