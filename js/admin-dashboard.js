@@ -13,6 +13,7 @@ const productosAMostrar = [];
 
 const seccionInfo = document.getElementById("info");
 
+const overlay = document.getElementById("overlay");
 
 const cerrarSesion = document.getElementById("cerrar-sesion");
     
@@ -139,7 +140,6 @@ function agregarProducto(){
 function toggleHabilitadoNotificacion(id){
     const producto = productos.find(p => p.id === id);
     const pantallaNotificacion = document.getElementById("toggle-habilitado-notificacion");
-    const overlay = document.getElementById("overlay");
 
     pantallaNotificacion.innerHTML = `
     <h3>Esta seguro que desea ${producto.habilitado ? "deshabilitar" : "habilitar"} este producto?</h3>
@@ -187,7 +187,95 @@ async function efectuarToggle(id){
 
 function cerrarNotificacionHabilitado(){
     const pantallaNotificacion = document.getElementById("toggle-habilitado-notificacion");
-    const overlay = document.getElementById("overlay");
+
+    pantallaNotificacion.style.opacity = 0;
+    pantallaNotificacion.style.pointerEvents = "auto";
+
+    overlay.style.opacity = 0;
+    overlay.style.pointerEvents = "none";
+}
+
+function editar(id) {
+    const producto = productos.find(p => p.id === id);
+    const pantallaNotificacion = document.getElementById("editar-notificacion");
+
+    pantallaNotificacion.innerHTML = `
+    <form id="form-edicion">
+        <label for="imagen-form">URL de la imagen:</label><br>
+        <input type="text" name="imagen" id="imagen-form" value="${producto.imagen}"><br>
+        <label for="nombre-form">Nombre del producto:</label><br>
+        <input type="text" name="nombre" id="nombre-form" value="${producto.nombre}"><br>
+        <label for="categoria-form">Categoria del producto:<label><br>
+        <select id="categoria-form">
+            <option value="whisky" ${producto.categoria === "whisky" ? "selected" : ""}>Whisky</option>
+            <option value="vino" ${producto.categoria === "vino" ? "selected" : ""}>Vino</option>
+        </select><br>
+        <label for="precio-form">Precio del producto:<label><br>
+        <input type="text" name="precio" id="precio-form" value="${producto.precio}"><br>
+        <label for="stock-form">Cantidad en stock:<label><br>
+        <input type="text" name="stock" id="stock-form" value="${producto.stock}"><br>
+        <label for="habilitado-form">Habilitado:<label><br>
+        <select id="habilitado-form">
+            <option value="1" ${producto.habilitado ? "selected" : ""}>Si</option>
+            <option value="0" ${!producto.habilitado ? "selected" : ""}>No</option>
+        </select><br>
+
+
+        <button type="submit" class="btn-confirmar">Confirmar</button>
+        <button type="button" class="btn-cancelar" onclick="cerrarNotificacionEditado()">Cancelar</button>
+    </form>
+    `
+
+    document.getElementById("form-edicion").addEventListener("submit", async (evento) => {
+        evento.preventDefault();
+
+        const imagen = document.getElementById("imagen-form").value.trim();
+        const nombre = document.getElementById("nombre-form").value.trim();
+        const categoria = document.getElementById("categoria-form").value;
+        const precio = document.getElementById("precio-form").value.trim();
+        const stock = document.getElementById("stock-form").value.trim();
+        const habilitado = document.getElementById("habilitado-form").value;
+
+        const nuevoProducto = {
+            imagen: imagen || producto.imagen,
+            nombre: nombre || producto.nombre,
+            categoria: categoria || producto.categoria,
+            precio: precio !== "" ? Number(precio) : producto.precio,
+            stock: stock !== "" ? Number(stock) : producto.stock,
+            habilitado: habilitado === "1",
+        };
+
+        try {
+            const res = await fetch(`http://localhost:3000/api/products/${id}`, {
+                method: "PUT",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(nuevoProducto)
+            });
+
+            if (!res.ok) {
+                console.error("error al actualizar");
+                return;
+            }
+
+            const actualizado = await res.json();
+
+            Object.assign(producto, actualizado.product);
+
+            mostrarProductos(productosAMostrar.length > 0 ? productosAMostrar : productos);
+
+            cerrarNotificacionEditado();
+        } catch (error) {
+            console.error(error);
+        }
+    });
+
+    pantallaNotificacion.style.opacity = 1;
+    overlay.style.opacity = 1;
+    overlay.style.pointerEvents = "auto";
+}
+
+function cerrarNotificacionEditado() {
+    const pantallaNotificacion = document.getElementById("editar-notificacion");
 
     pantallaNotificacion.style.opacity = 0;
     pantallaNotificacion.style.pointerEvents = "auto";
