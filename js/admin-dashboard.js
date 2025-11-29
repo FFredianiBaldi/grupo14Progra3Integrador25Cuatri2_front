@@ -9,7 +9,7 @@ const productosHTML = document.querySelector(".productos");
 const ventasHTML = document.querySelector(".ventas");
 
 const productos = [];
-const productosAMostrar = [];
+let productosAMostrar = [];
 
 const seccionInfo = document.getElementById("info");
 
@@ -80,8 +80,29 @@ function fetchProducts(){
 }
 
 function mostrarProductos(array){
+
+    let categoriaSeleccionada = document.getElementById("filtrar-categoria")?.value || "todos";
+    let ordenSeleccionado = document.getElementById("ordenar-por")?.value || "id";
+
     let objetoInfo = 
     `
+    <div class="filtrado-productos">
+        <p>Categoria: </p>
+        <select id="filtrar-categoria">
+            <option value="todos" ${categoriaSeleccionada === "todos" ? "selected" : ""}>Todos</option>
+            <option value="whisky" ${categoriaSeleccionada === "whisky" ? "selected" : ""}>Whisky</option>
+            <option value="vino" ${categoriaSeleccionada === "vino" ? "selected" : ""}>Vino</option>
+        </select>
+        <p>Ordenar por: </p>
+        <select id="ordenar-por">
+            <option value="id" ${ordenSeleccionado === "id" ? "selected" : ""}>ID</option>
+            <option value="alfabeticamente" ${ordenSeleccionado === "alfabeticamente" ? "selected" : ""}>A-Z</option>
+            <option value="precio-asc" ${ordenSeleccionado === "precio-asc" ? "selected" : ""}>Precio men. a may.</option>
+            <option value="precio-desc" ${ordenSeleccionado === "precio-desc" ? "selected" : ""}>Precio may. a men.</option>
+        </select>
+    </div>
+
+        
     <table class="tabla-productos">
         <thead>
             <tr>
@@ -127,6 +148,58 @@ function mostrarProductos(array){
     `
 
     seccionInfo.innerHTML = objetoInfo;
+
+    const selectCat = document.getElementById("filtrar-categoria");
+
+    selectCat.onchange = (evento) => {
+        if (evento.target.value === "todos"){
+            productosAMostrar = [];
+            mostrarProductos(productos);
+        } 
+        else {
+            productosAMostrar = productos.filter(p => p.categoria === evento.target.value);
+            mostrarProductos(productosAMostrar);
+        }
+    }
+
+    const selectOrd = document.getElementById("ordenar-por");
+
+    selectOrd.onchange = (evento) => {
+        if (evento.target.value === "id"){
+            if (productosAMostrar.length > 0) {
+                productosAMostrar.sort((a, b) => a.id - b.id);
+                mostrarProductos(productosAMostrar);
+            } else {
+                productos.sort((a, b) => a.id - b.id);
+                mostrarProductos(productos);
+            }
+        } else if (evento.target.value === "alfabeticamente"){
+            if (productosAMostrar.length > 0) {
+                productosAMostrar.sort((a, b) => a.nombre.localeCompare(b.nombre));
+                mostrarProductos(productosAMostrar);
+            }
+            else {
+                productos.sort((a, b) => a.nombre.localeCompare(b.nombre));
+                mostrarProductos(productos);
+            }
+        } else if (evento.target.value === "precio-asc") {
+            if (productosAMostrar.length > 0) {
+                productosAMostrar.sort((a, b) => a.precio - b.precio);
+                mostrarProductos(productosAMostrar);
+            } else {
+                productos.sort((a, b) => a.precio - b.precio);
+                mostrarProductos(productos);
+            }
+        } else if (evento.target.value === "precio-desc") {
+            if (productosAMostrar.length > 0) {
+                productosAMostrar.sort((a, b) => b.precio - a.precio);
+                mostrarProductos(productosAMostrar);
+            } else {
+                productos.sort((a, b) => b.precio - a.precio);
+                mostrarProductos(productos);
+            }
+        }
+    }
 }
 
 function mostrarBuscador(){
