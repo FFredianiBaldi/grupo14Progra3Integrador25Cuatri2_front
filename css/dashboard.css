@@ -153,6 +153,11 @@ main {
     background-color: lightgray;
 }
 
+.btn-editar:hover {
+    background-color: rgb(177, 177, 177);
+    cursor: pointer;
+}
+
 .btn-habilitar {
     background-color: lightgreen;
 }
@@ -171,7 +176,7 @@ main {
     cursor: pointer;
 }
 
-#toggle-habilitado-notificacion {
+#toggle-habilitado-notificacion, #editar-notificacion {
     display: flex;
     flex-direction: column;
     justify-content: center;
