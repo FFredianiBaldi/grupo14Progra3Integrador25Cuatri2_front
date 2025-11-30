@@ -1,8 +1,15 @@
 @import url("variables.css");
 
 body {
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
     margin: 0;
     padding: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none; 
 }
 
 #header {

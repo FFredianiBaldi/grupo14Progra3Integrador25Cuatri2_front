@@ -8,7 +8,7 @@
     <link rel="icon" href="assets/icons/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/productos.css">
-    <script defer src="js/main.js"></script>
+    <script defer src="./js/main.js"></script>
     <script defer src="js/productos.js"></script>
 </head>
 
@@ -16,11 +16,15 @@
     <div id="header"></div>
     <aside>
         <div class="selector-categoria categoria-activo">
-            <button id="whiskies" class="btn"><img src="./assets/images/whiskeys.webp" alt="Whiskeys"><p>Whiskeys</p></button>
+            <button id="whiskies" class="btn"><img src="./assets/images/whiskeys.webp" alt="Whiskeys">
+                <p>Whiskeys</p>
+            </button>
         </div>
 
         <div class="selector-categoria">
-            <button id="vinos" class="btn"><img src="./assets/images/vinos.webp" alt="Vinos"><p>Vinos</p></button>
+            <button id="vinos" class="btn"><img src="./assets/images/vinos.webp" alt="Vinos">
+                <p>Vinos</p>
+            </button>
         </div>
 
         <a href="index.html">Volver</a>
@@ -43,7 +47,9 @@
             <button id="vaciar-carrito" class="btn btn-eliminar">Vaciar carrito</button>
         </div>
 
-        <button class="to-carrito">Continuar al carrito &gt;</button>
+        <button class="to-carrito">
+            <a href="./components/carrito.html">Continuar al carrito &gt;</a>
+        </button>
     </div>
 
     <div id="notificacion" class="oculto"></div>
