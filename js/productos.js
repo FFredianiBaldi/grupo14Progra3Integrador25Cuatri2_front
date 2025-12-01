@@ -3,20 +3,16 @@ const categorias = document.querySelectorAll(".selector-categoria");
 categorias.forEach(categoria => {
     const btn = categoria.querySelector("button");
     btn.addEventListener("click", () => {
+        // Quita la clase activa de todas y la pone en la seleccionada
         categorias.forEach(c => c.classList.remove("categoria-activo"));
 
         categoria.classList.add("categoria-activo");
     });
 });
 
-
-
-
-
-
-
-
-
+// ---------------------------------------------------------------------------------
+// Productos: fetch desde API, render de tarjetas y manipulación del carrito
+// ---------------------------------------------------------------------------------
 
 const productos = [];
 const productosSection = document.getElementById("productos-section");
@@ -27,6 +23,7 @@ const totalObj = document.getElementById('total');
 const contadorProductos = document.getElementById('contador');
 const ordenButtons = document.getElementById('orden-buttons');
 
+// Obtiene los productos desde el backend y carga el carrito guardado
 const fetchProducts = () => {
     try {
         fetch("http://localhost:3000/api/products")
@@ -43,6 +40,7 @@ const fetchProducts = () => {
     }
 }
 
+// Renderiza las tarjetas de productos en la sección correspondiente
 const mostrarProductos = (array) => {
     let objetoProductos = '';
     array.forEach(producto => {
@@ -68,6 +66,7 @@ const mostrarProductos = (array) => {
     productosSection.innerHTML = objetoProductos;
 }
 
+// Añade producto al carrito respetando stock
 const agregarAlCarrito = (productoId) => {
     let productoEncontrado = productos.find(producto => producto.id === productoId);
     let productoEncontradoEnCarrito = carrito.find(producto => producto.id === productoId);
@@ -77,7 +76,6 @@ const agregarAlCarrito = (productoId) => {
         mostrarNotificacion("No hay mas stock disponible");
         return;
     }
-
 
     if (productoEncontradoEnCarrito) {
         productoEncontradoEnCarrito.cantidad++;
@@ -91,22 +89,7 @@ const agregarAlCarrito = (productoId) => {
     refrescarCategoriaActual();
 }
 
-// Puede servir para cuando se haga el carrito, asi que lo dejo comentado
-
-// const mostrarCarrito = () => {
-//     let obj = '';
-//     carrito.forEach(producto => {
-//         obj +=
-//             `
-//             <p class="nombre-item">${producto.nombre} - $${producto.precio * producto.cantidad}</p>
-//             <span>Cantidad: ${producto.cantidad}</span>
-//             <button class="btn-eliminar" onclick="eliminarProducto(${producto.id})">Eliminar</button>
-//         `
-//     });
-
-//     carritoObj.innerHTML = obj;
-// }
-
+// Eliminar o decrementar producto desde el carrito
 const eliminarProducto = (productoId) => {
     let productoEncontrado = carrito.find(producto => producto.id === productoId);
 
@@ -120,16 +103,19 @@ const eliminarProducto = (productoId) => {
     guardarEnLocalStorage(carrito);
 }
 
+// Calcula y actualiza el contador de productos en el header o UI
 const calcularTotalProductos = () => {
     let cantidadProductos = carrito.reduce((acc, value) => acc + value.cantidad, 0);
     contadorProductos.innerText = `Carrito: ${cantidadProductos} productos`;
 }
 
+// Actualiza el total mostrado en la UI del carrito (sidebar)
 const calcularTotal = () => {
     let sumaTotal = carrito.reduce((acc, value) => acc + value.precio * value.cantidad, 0);
     totalObj.innerText = `Total: $${sumaTotal.toFixed(2)}`; // Fixed para 2 decimales
 }
 
+// Filtros por categoría (botones)
 document.getElementById('whiskies').addEventListener('click', () => {
     let productosFiltrados = productos
         .filter(producto => producto.categoria === 'whisky')
@@ -142,6 +128,7 @@ document.getElementById('vinos').addEventListener('click', () => {
     mostrarProductos(productosFiltrados);
 });
 
+// Vaciar carrito desde UI principal
 document.getElementById('vaciar-carrito').addEventListener('click', function () {
     carrito = [];
     localStorage.removeItem('carrito');
@@ -151,10 +138,12 @@ document.getElementById('vaciar-carrito').addEventListener('click', function () 
     refrescarCategoriaActual();
 });
 
+// Guardado del carrito en localStorage (nombre de la key: 'carrito')
 const guardarEnLocalStorage = (carrito) => {
     localStorage.setItem('carrito', JSON.stringify(carrito));
 }
 
+// Carga carrito desde localStorage y fija tipos numéricos
 const cargarLocalStorage = () => {
     let carritoGuardado = localStorage.getItem('carrito');
     if (carritoGuardado) {
@@ -171,11 +160,13 @@ const cargarLocalStorage = () => {
     calcularTotal();
 }
 
+// Devuelve la cantidad actual de un item en el carrito
 function obtenerCantidadEnCarrito(id){
     let item = carrito.find(p => p.id === id);
     return item ? item.cantidad : 0;
 }
 
+// Delegación de eventos en productosSection para botones + / -
 productosSection.addEventListener("click", (e) => {
     if (e.target.classList.contains("btn-sumar")) {
         const card = e.target.closest(".card-producto");
@@ -200,6 +191,7 @@ productosSection.addEventListener("click", (e) => {
     }
 });
 
+// Actualiza la cantidad de un producto (se usa en la vista de productos)
 function actualizarCantidad(productoId, cambio, card) {
     let item = carrito.find(p => p.id === productoId);
 
@@ -224,6 +216,7 @@ function actualizarCantidad(productoId, cambio, card) {
     refrescarCategoriaActual();
 }
 
+// Refresca la categoría activa para re-renderizar la lista correcta
 function refrescarCategoriaActual() {
     const catActiva = document.querySelector(".categoria-activo button").id;
 
@@ -234,6 +227,7 @@ function refrescarCategoriaActual() {
     }
 }
 
+// Maneja el toggle Agregar/Eliminar por tarjeta de producto
 productosSection.addEventListener("click", (e) => {
     if (e.target.classList.contains("btn-toggle")) {
         const id = Number(e.target.dataset.id);
@@ -249,6 +243,7 @@ productosSection.addEventListener("click", (e) => {
     }
 });
 
+// Elimina un producto del carrito completamente (usado por toggle)
 function eliminarProductoTotal(id){
     carrito = carrito.filter(p => p.id !== id);
     guardarEnLocalStorage(carrito);
@@ -256,6 +251,7 @@ function eliminarProductoTotal(id){
     calcularTotalProductos();
 }
 
+// Muestra notificación simple en elemento #notificacion con animación/remoción rápida
 function mostrarNotificacion(texto){
     const notif = document.getElementById("notificacion");
     notif.textContent = texto;
@@ -267,4 +263,5 @@ function mostrarNotificacion(texto){
     }, 2000);
 }
 
+// Inicia la carga de productos
 fetchProducts();

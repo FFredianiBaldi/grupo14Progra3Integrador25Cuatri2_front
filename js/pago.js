@@ -1,6 +1,6 @@
-// pago.js - versión simple y directa
-
+// Función pública que muestra el modal de compra o descarga el PDF
 window.mostrarCompra = function (p) {
+    // Toma datos pasados o lee ultimaCompra de localStorage
     const saved = p || JSON.parse(localStorage.getItem('ultimaCompra') || 'null');
     if (!saved) return;
 
@@ -14,10 +14,12 @@ window.mostrarCompra = function (p) {
     const modal = document.getElementById('purchase-modal');
     const body = document.getElementById('purchase-body');
     if (!modal || !body) {
+        // Si no existe modal, descarga PDF directo
         descargarPdf(purchase);
         return;
     }
 
+    // Rellena el body del modal con los items (HTML simple)
     body.innerHTML = items.map(it => `
     <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee;">
       <div>
@@ -28,8 +30,10 @@ window.mostrarCompra = function (p) {
     </div>
   `).join('') + `<hr><div style="text-align:right;font-weight:700;margin-top:8px;">Total: $${Number(total).toFixed(2)}</div>`;
 
+    // Muestra el modal
     modal.style.display = 'flex';
 
+    // Obtiene botones del modal y asigna handlers
     const btnDownload = document.getElementById('download-pdf');
     const btnClose1 = document.getElementById('close-purchase');
     const btnClose2 = document.getElementById('close-purchase-2');
@@ -40,10 +44,12 @@ window.mostrarCompra = function (p) {
     if (btnDownload) {
         btnDownload.onclick = () => descargarPdf(purchase);
     } else {
+        // si no hay botón, descarga automática
         descargarPdf(purchase);
     }
 };
 
+// Genera y descarga PDF con jsPDF (asume window.jspdf disponible)
 function descargarPdf(purchase) {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();

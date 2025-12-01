@@ -1,11 +1,13 @@
-const token = localStorage.getItem("token");
+const tokenLogin = localStorage.getItem("token");
 
-if(token){
+if(tokenLogin){
+    // Si ya hay token, ir al dashboard
     window.location.href = "dashboard.html";
 }
 
 const form = document.getElementById("login-form");
 
+// Envía email y password al endpoint de autenticación y guarda el token si OK
 form.addEventListener("submit", async (evento) => {
     evento.preventDefault();
 
@@ -24,12 +26,13 @@ form.addEventListener("submit", async (evento) => {
         const data = await res.json();
 
         if (!res.ok) {
+            // Si hay error del backend, lo loguea y no hace redirect
             console.log(data.message);
             return;
         }
 
+        // Guarda token y redirige al dashboard
         localStorage.setItem("token", data.token);
-
         window.location.href = "dashboard.html";
     } catch (error) {
         console.error("error en la peticion: ", error);
