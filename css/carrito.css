@@ -1,7 +1,9 @@
+.texto-carrito {
+    padding-top: 12vh;
+}
 
 .container{
     max-width: 1100px;
-    margin: 100px auto 40px;
     padding: 0 16px;
     display: grid;
     grid-template-columns: 1fr 320px;

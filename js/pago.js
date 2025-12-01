@@ -1,5 +1,3 @@
-// pago.js - versión simple y directa
-
 window.mostrarCompra = function (p) {
     const saved = p || JSON.parse(localStorage.getItem('ultimaCompra') || 'null');
     if (!saved) return;

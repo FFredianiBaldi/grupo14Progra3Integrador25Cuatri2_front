@@ -6,19 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrito - Alambique 22</title>
     <link rel="icon" href="/assets/icons/logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/carrito.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/carrito.css">
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script defer src="../js/main.js"></script>
-    <script defer src="../js/carrito.js"></script>
-    <script defer src="../js/pago.js"></script>
+    <script defer src="js/main.js"></script>
+    <script defer src="js/carrito.js"></script>
+    <script defer src="js/pago.js"></script>
 </head>
 
 <body>
 
-    <div>
+    <div id="header"></div>
+
+    <div class="texto-carrito">
         <h2>Tu carrito: </h2>
     </div>
+
     <main class="container">
 
         <section id="cart-empty" class="oculto">
@@ -28,7 +31,6 @@
 
 
         <section id="cart-list" class="cart-list">
-            <!-- Aquí se renderizan los items -->
         </section>
 
 
@@ -49,8 +51,6 @@
 
     <div id="notificacion" class="notificacion oculto"></div>
 
-
-    <!-- Modal simple de resumen -->
     <div id="purchase-modal" class="modal-overlay">
         <div id="purchase-content" class="modal-content">
             <button id="close-purchase" class="modal-close">×</button>
