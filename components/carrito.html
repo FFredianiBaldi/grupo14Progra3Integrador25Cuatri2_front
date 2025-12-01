@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito - Alambique 22</title>
+    <link rel="icon" href="/assets/icons/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/carrito.css">
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script defer src="../js/main.js"></script>
+    <script defer src="../js/carrito.js"></script>
+    <script defer src="../js/pago.js"></script>
+</head>
+
+<body>
+
+    <div>
+        <h2>Tu carrito: </h2>
+    </div>
+    <main class="container">
+
+        <section id="cart-empty" class="oculto">
+            <p>Tu carrito está vacío.</p>
+            <a href="../productos.html" class="btn">Ir a productos</a>
+        </section>
+
+
+        <section id="cart-list" class="cart-list">
+            <!-- Aquí se renderizan los items -->
+        </section>
+
+
+        <aside class="cart-summary">
+            <div class="summary-row">
+                <span>Total:</span>
+                <span id="cart-total">$0.00</span>
+            </div>
+
+
+            <div class="summary-actions">
+                <button id="vaciar-carrito" class="btn btn-eliminar">Vaciar carrito</button>
+                <button id="checkout" class="btn btn-principal">Finalizar compra</button>
+            </div>
+        </aside>
+    </main>
+
+
+    <div id="notificacion" class="notificacion oculto"></div>
+
+
+    <!-- Modal simple de resumen -->
+    <div id="purchase-modal" class="modal-overlay">
+        <div id="purchase-content" class="modal-content">
+            <button id="close-purchase" class="modal-close">×</button>
+            <h3>Resumen de compra</h3>
+            <div id="purchase-body"></div>
+
+            <div class="modal-actions">
+                <button id="download-pdf" class="btn">Descargar PDF</button>
+                <button id="close-purchase-2" class="btn btn-eliminar">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
