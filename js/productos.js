@@ -21,6 +21,8 @@ categorias.forEach(categoria => {
 const productos = [];
 const productosSection = document.getElementById("productos-section");
 let carrito = [];
+const productosPorPagina = 6;
+let paginaActual = 1;
 
 const carritoObj = document.getElementById('carrito');
 const totalObj = document.getElementById('total');
@@ -44,8 +46,13 @@ const fetchProducts = () => {
 }
 
 const mostrarProductos = (array) => {
+
+    const inicio = (paginaActual - 1) * productosPorPagina;
+    const fin = inicio + productosPorPagina;
+    const productosPagina = array.slice(inicio, fin);
+
     let objetoProductos = '';
-    array.forEach(producto => {
+    productosPagina.forEach(producto => {
         if(producto.habilitado){
             const cantidad = obtenerCantidadEnCarrito(producto.id);
             const esEnCarrito = cantidad > 0;
@@ -68,6 +75,42 @@ const mostrarProductos = (array) => {
         }
     })
     productosSection.innerHTML = objetoProductos;
+
+    actualizarPaginacion(array);
+}
+
+function actualizarPaginacion(arrayCompleto){
+    const totalPaginas = Math.max(1, Math.ceil(arrayCompleto.length / productosPorPagina));
+    const paginacion = document.getElementById("paginacion");
+
+    if (totalPaginas <= 1) {
+        paginacion.innerHTML = "";
+        return;
+    }
+
+    paginacion.innerHTML = `
+    <button id="prev" ${paginaActual === 1 ? "disabled" : ""}>Anterior</button>
+    <span>Pagina ${paginaActual} de ${totalPaginas}</span>
+    <button id="next" ${paginaActual === totalPaginas ? "disabled" : ""}>Siguiente</button>
+    `;
+
+    document.getElementById("prev").addEventListener("click", () => {
+        if (paginaActual > 1) {
+            paginaActual--;
+
+            refrescarCategoriaActual();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+    })
+
+    document.getElementById("next").addEventListener("click", () => {
+        if (paginaActual < totalPaginas) {
+            paginaActual++;
+
+            refrescarCategoriaActual();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+    })
 }
 
 const agregarAlCarrito = (productoId) => {
@@ -133,12 +176,14 @@ const calcularTotal = () => {
 }
 
 document.getElementById('whiskies').addEventListener('click', () => {
+    paginaActual = 1;
     let productosFiltrados = productos
         .filter(producto => producto.categoria === 'whisky')
     mostrarProductos(productosFiltrados);
 });
 
 document.getElementById('vinos').addEventListener('click', () => {
+    paginaActual = 1;
     let productosFiltrados = productos
         .filter(producto => producto.categoria === 'vino')
     mostrarProductos(productosFiltrados);
@@ -230,9 +275,11 @@ function refrescarCategoriaActual() {
     const catActiva = document.querySelector(".categoria-activo button").id;
 
     if (catActiva === "whiskies") {
-        mostrarProductos(productos.filter(p => p.categoria === "whisky"));
+        const arr = productos.filter(p => p.categoria === "whisky");
+        mostrarProductos(arr);
     } else if (catActiva === "vinos"){
-        mostrarProductos(productos.filter(p => p.categoria === "vino"));
+        const arr = productos.filter(p => p.categoria === "vino");
+        mostrarProductos(arr);
     }
 }
 
