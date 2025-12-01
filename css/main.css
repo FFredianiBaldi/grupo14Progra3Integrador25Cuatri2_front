@@ -83,6 +83,9 @@ a {
         height: 40px;
     }
 
+    #header {
+        width: 100%;
+    }
 }
 
 @font-face {

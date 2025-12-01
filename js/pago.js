@@ -33,7 +33,7 @@ window.mostrarCompra = function (p) {
     const btnClose2 = document.getElementById('close-purchase-2');
 
     if (btnClose1) btnClose1.onclick = () => modal.style.display = 'none';
-    if (btnClose2) btnClose2.onclick = () => modal.style.display = 'none';
+    if (btnClose2) btnClose2.onclick = () => window.location.href="index.html";
 
     if (btnDownload) {
         btnDownload.onclick = () => descargarPdf(purchase);
