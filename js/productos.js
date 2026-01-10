@@ -31,7 +31,7 @@ const ordenButtons = document.getElementById('orden-buttons');
 
 const fetchProducts = () => {
     try {
-        fetch("http://localhost:3000/api/products")
+        fetch("https://alambique22-back.onrender.com/api/products")
             .then(response => response.json())
             .then(data => {
                 productos.push(...data);

@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.textContent = 'Procesando...';
 
         try {
-            const res = await fetch('http://localhost:3000/api/products/ventas', {
+            const res = await fetch('https://alambique22-back.onrender.com/api/products/ventas', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
