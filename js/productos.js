@@ -29,19 +29,46 @@ const totalObj = document.getElementById('total');
 const contadorProductos = document.getElementById('contador');
 const ordenButtons = document.getElementById('orden-buttons');
 
-const fetchProducts = () => {
-    try {
-        fetch("https://alambique22-api.onrender.com/api/products")
-            .then(response => response.json())
-            .then(data => {
-                productos.push(...data);
-                cargarLocalStorage();
-                console.log("Productos cargados: ", productos);
-                const productosWhisky = productos.filter(p => p.categoria === "whisky");
-                mostrarProductos(productosWhisky);
-            });
-    } catch (error) {
-        console.error(error);
+const fetchProducts = async () => {
+    const URL = "https://alambique22-api.onrender.com/api/products";
+
+    const pedirProductos = async () => {
+        const response = await fetch(URL);
+        return response.json();
+    };
+
+    try{
+        const data = await pedirProductos();
+
+        if(Array.isArray(data) && data.length > 0) {
+            productos.push(...data);
+            cargarLocalStorage();
+
+            console.log("Productos cargados:", productos);
+
+            const productosWhisky = productos.filter(p => p.categoria === "whisky");
+            mostrarProductos(productosWhisky);
+            return;
+        }
+
+        console.warn("No se recibieron productos. reintentando en 50 segundos");
+        await new Promise(resolve => setTimeout(resolve, 50000));
+
+        const dataRetry = await pedirProductos();
+
+        if(Array.isArray(dataRetry) && dataRetry.length > 0) {
+            productos.push(...dataRetry);
+            cargarLocalStorage();
+
+            console.log("Productos cargados:", productos);
+
+            const productosWhisky = productos.filter(p => p.categoria === "whisky");
+            mostrarProductos(productosWhisky);
+        } else {
+            console.error("No se recibieron productos despues del segundo intento")
+        }
+    } catch(error) {
+        console.error("Error en la peticion:", error);
     }
 }
 
