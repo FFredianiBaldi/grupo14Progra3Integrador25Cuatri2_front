@@ -51,7 +51,7 @@ const fetchProducts = async () => {
             return;
         }
 
-        toggleCargando();
+        mostrarCargando();
 
         console.warn("No se recibieron productos. reintentando en 50 segundos");
         await new Promise(resolve => setTimeout(resolve, 50000));
@@ -59,7 +59,7 @@ const fetchProducts = async () => {
         const dataRetry = await pedirProductos();
 
         if(Array.isArray(dataRetry) && dataRetry.length > 0) {
-            toggleCargando();
+            ocultarCargando();
             productos.push(...dataRetry);
             cargarLocalStorage();
 
@@ -68,7 +68,7 @@ const fetchProducts = async () => {
             const productosWhisky = productos.filter(p => p.categoria === "whisky");
             mostrarProductos(productosWhisky);
         } else {
-            toggleCargando();
+            ocultarCargando();
             console.error("No se recibieron productos despues del segundo intento")
         }
     } catch(error) {
@@ -347,11 +347,12 @@ function mostrarNotificacion(texto){
     }, 2000);
 }
 
-function toggleCargando() {
-    const cargando = document.getElementById("pantallaCarga");
+function mostrarCargando() {
+    document.getElementById("pantallaCarga").classList.add("mostrar");
+}
 
-    cargando.classList.toggle("ocultar");
-    cargando.classList.toggle("mostrar");
+function ocultarCargando() {
+    document.getElementById("pantallaCarga").classList.remove("mostrar");
 }
 
 fetchProducts();
