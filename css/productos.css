@@ -318,6 +318,7 @@ aside a:hover{
     left: 0;
     opacity: 0;
     transition: opacity 0.4s ease;
+    pointer-events: none;
 }
 
 #pantallaCarga img {
@@ -330,6 +331,7 @@ aside a:hover{
 
 #pantallaCarga.mostrar {
     opacity: 1;
+    pointer-events: all;
 }
 
 @media(max-width: 1100px){
