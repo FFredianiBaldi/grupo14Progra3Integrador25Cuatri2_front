@@ -68,6 +68,7 @@ const fetchProducts = async () => {
             const productosWhisky = productos.filter(p => p.categoria === "whisky");
             mostrarProductos(productosWhisky);
         } else {
+            toggleCargando();
             console.error("No se recibieron productos despues del segundo intento")
         }
     } catch(error) {
@@ -349,13 +350,8 @@ function mostrarNotificacion(texto){
 function toggleCargando() {
     const cargando = document.getElementById("pantallaCarga");
 
-    if(cargando.contains("ocultar")) {
-        cargando.classList.add("mostrar");
-        cargando.classList.remove("ocultar");
-    } else{
-        cargando.classList.add("ocultar");
-        cargando.classList.remove("mostrar");
-    }
+    cargando.classList.toggle("ocultar");
+    cargando.classList.toggle("mostrar");
 }
 
 fetchProducts();
