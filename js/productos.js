@@ -51,12 +51,15 @@ const fetchProducts = async () => {
             return;
         }
 
+        toggleCargando();
+
         console.warn("No se recibieron productos. reintentando en 50 segundos");
         await new Promise(resolve => setTimeout(resolve, 50000));
 
         const dataRetry = await pedirProductos();
 
         if(Array.isArray(dataRetry) && dataRetry.length > 0) {
+            toggleCargando();
             productos.push(...dataRetry);
             cargarLocalStorage();
 
@@ -341,6 +344,18 @@ function mostrarNotificacion(texto){
     setTimeout(() => {
         notif.classList.remove("mostrar");
     }, 2000);
+}
+
+function toggleCargando() {
+    const cargando = document.getElementById("pantallaCarga");
+
+    if(cargando.contains("ocultar")) {
+        cargando.classList.add("mostrar");
+        cargando.classList.remove("ocultar");
+    } else{
+        cargando.classList.add("ocultar");
+        cargando.classList.remove("mostrar");
+    }
 }
 
 fetchProducts();
