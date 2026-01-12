@@ -37,44 +37,28 @@ const fetchProducts = async () => {
         return response.json();
     };
 
-    try{
-        const data = await pedirProductos();
-
-        if(Array.isArray(data) && data.length > 0) {
-            productos.push(...data);
-            cargarLocalStorage();
-
-            console.log("Productos cargados:", productos);
-
-            const productosWhisky = productos.filter(p => p.categoria === "whisky");
-            mostrarProductos(productosWhisky);
-            return;
-        }
-
+    try {
         mostrarCargando();
 
-        console.warn("No se recibieron productos. reintentando en 50 segundos");
-        await new Promise(resolve => setTimeout(resolve, 50000));
+        const data = await pedirProductos();
 
-        const dataRetry = await pedirProductos();
-
-        if(Array.isArray(dataRetry) && dataRetry.length > 0) {
-            ocultarCargando();
-            productos.push(...dataRetry);
+        if (Array.isArray(data) && data.length > 0) {
+            productos.push(...data);
             cargarLocalStorage();
-
-            console.log("Productos cargados:", productos);
 
             const productosWhisky = productos.filter(p => p.categoria === "whisky");
             mostrarProductos(productosWhisky);
         } else {
-            ocultarCargando();
-            console.error("No se recibieron productos despues del segundo intento")
+            console.warn("No se recibieron productos");
         }
-    } catch(error) {
-        console.error("Error en la peticion:", error);
+
+    } catch (error) {
+        console.error("Error en la petición:", error);
+    } finally {
+        ocultarCargando();
     }
-}
+};
+
 
 const mostrarProductos = (array) => {
 
